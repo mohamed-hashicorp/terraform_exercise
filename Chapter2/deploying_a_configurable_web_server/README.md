@@ -15,7 +15,7 @@ git clone https://github.com/mohamed-hashicorp/terraform_exercise.git
 '''
 - Change the directory to Deploying_a_single_server
 '''
-cd Chapter2/deploying_a_single_web_server
+cd Chapter2/deploying_a_configurable_web_server
 '''
 - Run Terraform init
 '''
@@ -28,6 +28,9 @@ terraform apply
 - Type yes if you prompted the following
 '''
 Plan: 2 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + public_ip = (known after apply)
 
 Do you want to perform these actions?
   Terraform will perform the actions described above.
