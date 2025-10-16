@@ -10,23 +10,23 @@ This guide was executed on MacOS so it assumes the following:
 
 ## Steps to follow this guide
 - Clone the Github repo by running the below command
-'''
+```
 git clone https://github.com/mohamed-hashicorp/terraform_exercise.git
-'''
+```
 - Change the directory to Deploying_a_single_server
-'''
+```
 cd Chapter2/deploying_a_single_web_server
-'''
+```
 - Run Terraform init
-'''
+```
 terraform init
-'''
+```
 - Run Terraform apply
-'''
+```
 terraform apply
-'''
+```
 - Type yes if you prompted the following
-'''
+```
 Plan: 2 to add, 0 to change, 0 to destroy.
 
 Do you want to perform these actions?
@@ -34,8 +34,8 @@ Do you want to perform these actions?
   Only 'yes' will be accepted to approve.
 
   Enter a value: 
-'''
+```
 - If finished this excersice, delete your infrastructure
-'''
+```
 terraform destroy
-'''
+```
