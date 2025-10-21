@@ -1,6 +1,7 @@
 # Chapter3 - How to Manage Terraform state
 
-In this section the author demonstrates on how to deploy a single server on AWS
+In this section the author explains the state file contents and what you will find in the state file incase if you deployed an EC2 instance on AWS
+
 
 ## Prerequistes
 This guide was executed on MacOS so it assumes the following:
