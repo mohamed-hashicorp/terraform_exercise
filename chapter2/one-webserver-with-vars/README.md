@@ -51,10 +51,10 @@ terraform apply
 
 - Type yes if you prompted the following
 ```
-Plan: 8 to add, 0 to change, 0 to destroy.
+Plan: 2 to add, 0 to change, 0 to destroy.
 
 Changes to Outputs:
-  + alb_dns_name = (known after apply)
+  + public_ip = (known after apply)
 
 Do you want to perform these actions?
   Terraform will perform the actions described above.
