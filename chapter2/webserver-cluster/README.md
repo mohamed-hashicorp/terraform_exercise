@@ -1,8 +1,10 @@
 # Web Server Example
 
-This folder contains an example [Terraform](https://www.terraform.io/) configuration that deploys a single web server (using 
-[EC2](https://aws.amazon.com/ec2/)) in an [Amazon Web Services (AWS) account](http://aws.amazon.com/). The web server
-listens on port 8080 and returns the text "Hello, World" for the `/` URL.
+This folder contains an example [Terraform](https://www.terraform.io/) configuration that deploys a cluster of web servers 
+(using [EC2](https://aws.amazon.com/ec2/) and [Auto Scaling](https://aws.amazon.com/autoscaling/)) and a load balancer
+(using [ELB](https://aws.amazon.com/elasticloadbalancing/)) in an [Amazon Web Services (AWS) 
+account](http://aws.amazon.com/). The load balancer listens on port 80 and returns the text "Hello, World" for the 
+`/` URL.
 
 For more info, please see Chapter 2, "Getting started with Terraform", of 
 *[Terraform: Up and Running](http://www.terraformupandrunning.com)*.
@@ -33,9 +35,9 @@ Please note that this code was written for Terraform 1.5.7
 git clone https://github.com/mohamed-hashicorp/terraform_exercise.git
 ```
 
-- Change the directory to one-webserver
+- Change the directory to webserver-cluster
 ```
-cd Chapter2/one-webserver
+cd Chapter2/webserver-cluster
 ```
 
 ## Create Infrastructure
@@ -63,16 +65,13 @@ Do you want to perform these actions?
   Enter a value: 
 ```
 
-
 ## Check was created
 
-- When the `apply` command completes, it will output the public IP address of the server. To test that IP:
+- When the `apply` command completes, it will output the hostname of the application load balancer. To test that IP:
 
 ```
-curl http://(server_public_ip):8080/
+curl http://(alb_dns_name)/
 ```
-
-
 ## Delete Infrastructure
 - When done, you can remove the resources with terraform destroy, type:
 ```
@@ -87,6 +86,5 @@ terraform destroy
 ```
 - Once the resources are destoryed you will see:
 ```
-Destroy complete! Resources: 2 destroyed
+Destroy complete! Resources: 8 destroyed
 ```
-

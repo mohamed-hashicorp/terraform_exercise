@@ -1,32 +1,28 @@
 terraform {
-  #required_version = ">= 1.0.0, < 2.0.0"
+  required_version = ">= 1.0.0, < 2.0.0"
 
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      #version = "~> 4.0"
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
     }
   }
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region = "us-east-2"
 }
 
 resource "aws_launch_configuration" "example" {
-  image_id        = "ami-01e444924a2233b07"
+  image_id        = "ami-0fb653ca2d3203ac1"
   instance_type   = "t2.micro"
   security_groups = [aws_security_group.instance.id]
 
   user_data = <<-EOF
-    #!/bin/bash
-
-    echo "<p><span>Hello, World</span></p>" >> index.html
-    echo "<h1><span>hostname $(hostname -s )</span></h1>" >> index.html
-    echo "<h2><span>ip $(hostname -I)</span></h2>" >> index.html
-
-    nohup busybox httpd -f -p ${var.server_port} &
-  EOF
+              #!/bin/bash
+              echo "Hello, World" > index.html
+              nohup busybox httpd -f -p ${var.server_port} &
+              EOF
 
   # Required when using a launch configuration with an auto scaling group.
   lifecycle {
@@ -42,7 +38,7 @@ resource "aws_autoscaling_group" "example" {
   health_check_type = "ELB"
 
   min_size = 2
-  max_size = 3
+  max_size = 10
 
   tag {
     key                 = "Name"
@@ -75,7 +71,7 @@ data "aws_subnets" "default" {
 
 resource "aws_lb" "example" {
 
-  name = var.alb_name
+  name               = var.alb_name
 
   load_balancer_type = "application"
   subnets            = data.aws_subnets.default.ids
@@ -154,3 +150,4 @@ resource "aws_security_group" "alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
