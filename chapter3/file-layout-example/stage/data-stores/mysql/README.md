@@ -3,50 +3,110 @@
 This folder contains an example [Terraform](https://www.terraform.io/) configuration that deploys a MySQL database (using 
 [RDS](https://aws.amazon.com/rds/) in an [Amazon Web Services (AWS) account](http://aws.amazon.com/). 
 
+What we will do?
+
+- Check pre-requisites
+- Clone repo
+- Create infrastructure
+- Check what has been created
+- Delete infrastructure
+
+
 For more info, please see Chapter 3, "How to Manage Terraform State", of 
 *[Terraform: Up and Running](http://www.terraformupandrunning.com)*.
 
-## Pre-requisites
+## Check Prerequistes
 
-* You must have [Terraform](https://www.terraform.io/) installed on your computer. 
-* You must have an [Amazon Web Services (AWS) account](http://aws.amazon.com/).
+This guide was executed on MacOS so it assumes the following:
+- You have Git installed.
+- AWS Credentials are configured.
+- Terraform is installed (I used Terraform 1.5.7)
 
-Please note that this code was written for Terraform 1.x.
 
-## Quick start
-
-**Please note that this example will deploy real resources into your AWS account. We have made every effort to ensure 
-all the resources qualify for the [AWS Free Tier](https://aws.amazon.com/free/), but we are not responsible for any
-charges you may incur.** 
-
-Configure your [AWS access 
-keys](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) as 
-environment variables:
-
+## Clone repo
+- Clone the Github repo by running the below command
 ```
-export AWS_ACCESS_KEY_ID=(your access key id)
-export AWS_SECRET_ACCESS_KEY=(your secret access key)
+git clone https://github.com/mohamed-hashicorp/terraform_exercise.git
 ```
 
-Configure the database credentials as environment variables:
-
+- Change the directory to chapter3/file-layout-example/stage/data-stores/mysql
 ```
-export TF_VAR_db_username=(desired database username)
-export TF_VAR_db_password=(desired database password)
+cd chapter3/file-layout-example/stage/data-stores/mysql
 ```
 
-Open `main.tf`, uncomment the `backend` configuration, and fill in the name of your S3 bucket, DynamoDB table, and
-the path to use for the Terraform state file.
-
-Deploy the code:
-
+## Create Infrastructure
+- Run Terraform init
 ```
 terraform init
+```
+- When prompted, enter the S# bucket name and the state file path and the AWS region
+```
+Initializing the backend...
+bucket
+  The name of the S3 bucket
+
+  Enter a value: terraform-up-and-running-bucket-mohamed
+
+key
+  The path to the state file inside the bucket
+
+  Enter a value: global/s3/stage
+
+region
+  AWS region of the S3 Bucket and DynamoDB Table (if used).
+
+  Enter a value: us-east-2
+```  
+- Run Terraform apply
+```
 terraform apply
 ```
+- When prompted, enter the database password and username
+```
+var.db_password
+  The password for the database
 
-Clean up when you're done:
+  Enter a value: 
 
+var.db_username
+  The username for the database
+
+  Enter a value: 
+```
+- Type yes if you prompted the following
+```
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: 
+```
+
+## Check was created
+- To check your created server, open your browser.
+- Login to your [AWS console](https://aws.amazon.com/console) with your AWS credentials.
+- In the search bar at the top, type RDS and click on it.
+- Make sure that you in the correct region.
+- You can see the deployed database.
+
+
+
+## Delete Infrastructure
+- When done, you can remove the resources with terraform destroy, type:
 ```
 terraform destroy
 ```
+- Type yes, when prompted:
+```
+    Do you really want to destroy all resources?
+    Terraform will destroy all your managed infrastructure, as shown above.
+    There is no undo. Only 'yes' will be accepted to confirm.
+    Enter a value: 
+```
+- Once the resources are destoryed you will see:
+```
+Destroy complete! Resources: 1 destroyed
+```
+

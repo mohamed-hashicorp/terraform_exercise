@@ -5,64 +5,101 @@ This folder contains an example [Terraform](https://www.terraform.io/) configura
 example is to be a playground for [Terraform Workspaces](https://www.terraform.io/docs/state/workspaces.html), so the
 configuration of the server will change depending on what workspace you're in. 
 
-For more info, please see Chapter 3, "How to Manage Terraform State", of 
+What we will do?
+
+- Check pre-requisites
+- Clone repo
+- Create infrastructure
+- Check what has been created
+- Delete infrastructure
+
+For more info, please see Chapter 2, "Getting started with Terraform", of 
 *[Terraform: Up and Running](http://www.terraformupandrunning.com)*.
 
-## Pre-requisites
+## Check Prerequistes
 
-* You must have [Terraform](https://www.terraform.io/) installed on your computer. 
-* You must have an [Amazon Web Services (AWS) account](http://aws.amazon.com/).
+This guide was executed on MacOS so it assumes the following:
+- You have Git installed.
+- AWS Credentials are configured.
+- Terraform is installed (I used Terraform 1.5.7)
 
-Please note that this code was written for Terraform 1.x.
-
-## Quick start
-
-**Please note that this example will deploy real resources into your AWS account. We have made every effort to ensure 
-all the resources qualify for the [AWS Free Tier](https://aws.amazon.com/free/), but we are not responsible for any
-charges you may incur.** 
-
-Configure your [AWS access 
-keys](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) as 
-environment variables:
-
+## Clone repo
+- Clone the Github repo by running the below command
 ```
-export AWS_ACCESS_KEY_ID=(your access key id)
-export AWS_SECRET_ACCESS_KEY=(your secret access key)
+git clone https://github.com/mohamed-hashicorp/terraform_exercise.git
 ```
 
-Deploy the code:
+- Change the directory to workspaces-example/one-instance
+```
+cd chapter3/workspaces-example/one-instance
+```
 
+## Create Infrastructure
+- Run Terraform init
 ```
 terraform init
-terraform apply
 ```
 
-Create a new workspace:
-
-```
-terraform workspace new example
-```
-
-And deploy the code again:
-
+- Run Terraform apply
 ```
 terraform apply
 ```
 
-Clean up when you're done:
+- Type yes if you prompted the following
+```
+Plan: 1 to add, 0 to change, 0 to destroy.
 
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: 
+```
+- List the current workspace
+```
+terraform workspace show
+```
+- Create a new workspace
+```
+terraform workspace new example1
+```
+- Run Terraform apply with auto-approve option to automatically start deploying the infrastructure without using prompt for confirmation.
+```
+terraform apply --auto-approve
+```
+- Create a new workspace
+```
+terraform workspace new example2
+```
+- Run Terraform apply with auto-approve option to automatically start deploying the infrastructure without using prompt for confirmation.
+```
+terraform apply --auto-approve
+```
+
+## Check was created
+- To check your created server, open your browser.
+- Login to your [AWS console](https://aws.amazon.com/console) with your AWS credentials.
+- In the search bar at the top, type EC2 and click on it.
+- Under Instances, click Instances (Running)
+- You can see the deployed servers.
+- Each EC2 instance is running separatly with a different state file.
+- Note that the instance type of each deployed EC2 instance
+
+
+## Delete Infrastructure
+- When done, you can remove the resources with terraform destroy, type:
 ```
 terraform destroy
 ```
-
-Then switch back to the default workspace:
-
+- Type yes, when prompted:
 ```
-terraform workspace switch default
+    Do you really want to destroy all resources?
+    Terraform will destroy all your managed infrastructure, as shown above.
+    There is no undo. Only 'yes' will be accepted to confirm.
+    Enter a value: 
+```
+- Once the resources are destoryed you will see:
+```
+Destroy complete! Resources: 1 destroyed
 ```
 
-And clean that up too:
-
-```
-terraform destroy
-```

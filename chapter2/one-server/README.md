@@ -31,7 +31,7 @@ git clone https://github.com/mohamed-hashicorp/terraform_exercise.git
 
 - Change the directory to Deploying_a_single_server
 ```
-cd Chapter2/deploying_a_cluster_web_servers
+cd chapter2/deploying_a_cluster_web_servers
 ```
 
 ## Create Infrastructure

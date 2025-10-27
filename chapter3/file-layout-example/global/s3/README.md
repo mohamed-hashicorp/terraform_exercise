@@ -5,56 +5,99 @@ This folder contains example [Terraform](https://www.terraform.io/) configuratio
 [Amazon Web Services (AWS) account](http://aws.amazon.com/). The S3 bucket and DynamoDB table can be used as a 
 [remote backend for Terraform](https://www.terraform.io/docs/backends/).
 
+What we will do?
+
+- Check pre-requisites
+- Clone repo
+- Create infrastructure
+- Check what has been created
+- Delete infrastructure
+
+
 For more info, please see Chapter 3, "How to Manage Terraform State", of 
 *[Terraform: Up and Running](http://www.terraformupandrunning.com)*.
 
-## Pre-requisites
+## Check Prerequistes
 
-* You must have [Terraform](https://www.terraform.io/) installed on your computer. 
-* You must have an [Amazon Web Services (AWS) account](http://aws.amazon.com/).
+This guide was executed on MacOS so it assumes the following:
+- You have Git installed.
+- AWS Credentials are configured.
+- Terraform is installed (I used Terraform 1.5.7)
 
-Please note that this code was written for Terraform 1.x.
 
-## Quick start
-
-**Please note that this example will deploy real resources into your AWS account. We have made every effort to ensure 
-all the resources qualify for the [AWS Free Tier](https://aws.amazon.com/free/), but we are not responsible for any
-charges you may incur.** 
-
-Configure your [AWS access 
-keys](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) as 
-environment variables:
-
+## Clone repo
+- Clone the Github repo by running the below command
 ```
-export AWS_ACCESS_KEY_ID=(your access key id)
-export AWS_SECRET_ACCESS_KEY=(your secret access key)
+git clone https://github.com/mohamed-hashicorp/terraform_exercise.git
 ```
 
-Specify a name for the S3 bucket and DynamoDB table in `variables.tf` using the `default` parameter:
-
-```hcl
-variable "bucket_name" {
-  description = "The name of the S3 bucket. Must be globally unique."
-  type        = string
-  default     = "<YOUR BUCKET NAME>"
-}
-
-variable "table_name" {
-  description = "The name of the DynamoDB table. Must be unique in this AWS account."
-  type        = string
-  default     = "<YOUR TABLE NAME>"
-}
+- Change the directory to chapter3/file-layout-example/global/s3
+```
+cd chapter3/file-layout-example/global/s3
 ```
 
-Deploy the code:
-
+## Create Infrastructure
+- Run Terraform init
 ```
 terraform init
+```
+
+- Run Terraform apply
+```
 terraform apply
 ```
+- When prompted, enter the values of the S3 bucket and the DynamoDB table names
+```
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+mohamedayman@mohameds-mbp s3 % terraform apply
+var.bucket_name
+  The name of the S3 bucket. Must be globally unique.
 
-Clean up when you're done:
+  Enter a value: terraform-up-and-running-bucket-mohamed
 
+var.table_name
+  The name of the DynamoDB table. Must be unique in this AWS account.
+
+  Enter a value: terraform-up-and-running-dynamodb-mohamed
+```
+- Type yes if you prompted the following
+```
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + dynamodb_table_name = "terraform-up-and-running-dynamodb-mohamed"
+  + s3_bucket_arn       = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+```
+
+## Check was created
+- To check your created S3, open your browser.
+- Login to your [AWS console](https://aws.amazon.com/console) with your AWS credentials.
+- In the search bar at the top, type S3 and click on it.
+- You can see the deployed S3 bucket.
+- In the search bar at the top, type Dynamodb and click on it.
+- You can see the deployed Dynamodb table.
+
+
+## Delete Infrastructure
+- When done, you can remove the resources with terraform destroy, type:
 ```
 terraform destroy
+```
+- Type yes, when prompted:
+```
+    Do you really want to destroy all resources?
+    Terraform will destroy all your managed infrastructure, as shown above.
+    There is no undo. Only 'yes' will be accepted to confirm.
+    Enter a value: 
+```
+- Once the resources are destoryed you will see:
+```
+Destroy complete! Resources: 1 destroyed
 ```
