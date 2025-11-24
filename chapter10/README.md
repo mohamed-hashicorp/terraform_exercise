@@ -1,4 +1,4 @@
-# Chapter 9
+# Chapter 910
 
 This chapter covers how to test Terraform infrastructure code, including:
 - Manual testing of Terraform modules and environments
@@ -14,9 +14,6 @@ Browse and run each example independently.
 Self-contained Terraform examples used for learning, experimentation, and testing:
 - [alb](./examples/alb/)
 - [asg](./examples/asg/)
-- [hello-world-app](./examples/hello-world-app/)
-- [mysql](./examples/mysql/)
-- [opa](./examples/opa/)
 
 ---
 
